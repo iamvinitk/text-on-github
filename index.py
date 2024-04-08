@@ -7,7 +7,7 @@ import requests
 
 from common import charMatrix
 from dating import sunday_at_start
-from datetime import datetime, timedelta
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,8 +17,8 @@ SKIP_DAYS_FROM_ABOVE = 1
 COMMIT_PER_DAY_FOR_HIGHLIGHTED = 5
 COMMIT_PER_DAY_FOR_SHADOW = 1
 
-OWNER = "kanani-vinit"
-EMAIL = "kananivinitrocking@gmail.com"
+OWNER = "HAckeRSHIL"
+EMAIL = "<UPDATE_THIS>"
 REPO_NAME = "text-on-github"
 CREATE_ENDPOINT = "https://api.github.com/user/repos"
 DELETE_ENDPOINT = "https://api.github.com/repos/{owner}/{repo}"
@@ -38,7 +38,7 @@ def construct_printing_matrix(text_input):
 
     spaceBetweenChars = 2
 
-    printingMatrix = [[] for i in range(m)]
+    printingMatrix = [[] for _ in range(m)]
 
     for ch in text_input:
         charMatrixForCh = charMatrix.get(ch, charMatrix['?'])
@@ -77,7 +77,9 @@ def do_the_commits(commitDates, commitPerDay=1):
         for i in range(commitPerDay):
             formatted_date = commitDate.strftime("%a %b %d %H:%M %Y %z")
             formatted_date_with_timezone = formatted_date + " +0700"
-            cmd = f'GIT_COMMITTER_DATE="{formatted_date_with_timezone}" GIT_AUTHOR_DATE="{formatted_date_with_timezone}" git commit --allow-empty -m "committing on {formatted_date_with_timezone}"'
+            cmd = (
+                f'GIT_COMMITTER_DATE="{formatted_date_with_timezone}" GIT_AUTHOR_DATE="{formatted_date_with_timezone}" '
+                f'git commit --allow-empty -m "committing on {formatted_date_with_timezone}"')
             run_git_command(cmd)
 
     cmd = 'git push origin main'
